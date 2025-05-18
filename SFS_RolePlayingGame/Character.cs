@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
+
 namespace SFS_RolePlayingGame
 {
     public enum JobType
@@ -28,13 +29,13 @@ namespace SFS_RolePlayingGame
             int damage = GetRandomDamage(this.Power, 3); // ±3 오차S
             if (target.TryDodge(20)) // 20% 확률 회피
             {
-                Console.WriteLine($"[System] {target.Name}이(가) 공격을 회피했다!");
+                Console.WriteLine($"[System] {this.Name}이(가) 공격하였으나 {target.Name}이(가) 공격을 회피했다!");
             }
             else
             {
                 target.Hp -= damage;
                 if (target.Hp < 0) target.Hp = 0;
-                Console.WriteLine($"[System] {target.Name}이(가) {damage}의 피해를 입었다!");
+                Console.WriteLine($"[System] {this.Name}이(가) 공격하여 {target.Name}이(가) {damage}의 피해를 입었다!");
             }
         }
         
