@@ -66,7 +66,17 @@ namespace SFS_RolePlayingGame
                 {
                     Console.WriteLine($"[System] {round} 라운드 승리!");
                     // 플레이어의 레벨을 상승시킨다
-                    LevelUpPlayer(player);
+                    int newHp = player.Hp + 30;
+                    int newPower = player.Power + 5;
+                    player.LevelUp(newHp, newPower);
+
+                    // NPC가 사망하지 않았다면
+                    if (npc.Hp >= 1)
+                    {
+                        npc.Hp += 20;
+                        npc.Power += 5;
+                    }
+                    
                 }
 
                 // 라운드 상승
@@ -144,9 +154,6 @@ namespace SFS_RolePlayingGame
 
                 player.Attack(monsters[targetIndex]);
 
-                // NPC는 랜덤 몬스터를 공격
-                npc.Attack(monsters[rand.Next(0,2)]);
-
                 // 몬스터 체력이 0이 되면 사망 처리 (리스트에서 제거)
                 if (monsters[targetIndex].Hp <= 0)
                 {
@@ -157,8 +164,7 @@ namespace SFS_RolePlayingGame
                 // 몬스터 리스트에 아직 몬스터가 남아 있다면
                 if (monsters.Count > 0)
                 {
-                    Random rnd = new Random();
-                    int npcTarget = rnd.Next(monsters.Count);
+                    int npcTarget = rand.Next(monsters.Count);
                     npc.Attack(monsters[npcTarget]);
                     if (monsters[npcTarget].Hp <= 0)
                     {
@@ -194,15 +200,6 @@ namespace SFS_RolePlayingGame
             }
 
             return player.Hp > 0 || npc.Hp > 0;
-        }
-
-
-        // 플레이어 레벨업 메소드
-        static void LevelUpPlayer(Player player)
-        {
-            int newHp = player.Hp + 30;
-            int newPower = player.Power + 5;
-            player.LevelUp(newHp, newPower);
         }
 
         // 에필로그 Script String 배열 변수
